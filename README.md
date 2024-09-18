@@ -25,28 +25,28 @@ This tutorial will install the following tools:
 
 3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_windows_x64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_macos_aarch64.yml).
 
-5. Install the metabarcoding environment by typing:
+4. Install the metabarcoding environment by typing:
    ```sh
    conda env create -f environment_XXX.yml
    
-6. Ensure you provide the correct path, for example:
+5. Ensure you provide the correct path, for example:
    ```sh
    conda env create -f /Users/tillmacher/Downloads/metabarcoding_env_macos_aarch64.yml
    
-7. This should automatically install all dependencies. After the installation, activate the environment:
+6. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
    conda activate metabarcoding
 
-8. For Windows and MacOS users run the apscale-installer script:
+7. For Windows and MacOS users run the apscale-installer script:
    ```sh
    apscale_installer
 
-9. For Linux and MacOS (intel) users can use conda:
+8. For Linux and MacOS (intel) users can use conda:
    ```sh
    conda install vsearch
    conda install blast
 
-10. Verify your installations:
+9. Verify your installations:
    ```sh
    vsearch --help
    blastn -h
