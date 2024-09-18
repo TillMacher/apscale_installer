@@ -27,7 +27,7 @@ This tutorial will install the following tools:
 
 4. Install the metabarcoding environment by typing:
    ```sh
-   conda env create -f environment_XXX.yml
+   conda env create -f metabarcoding_env_XXX.yml
    
 5. Ensure you provide the correct path, for example:
    ```sh
@@ -37,11 +37,11 @@ This tutorial will install the following tools:
    ```sh
    conda activate metabarcoding
 
-7. Windows and MacOS users run the apscale-installer script:
+7. **Windows and MacOS** users run the apscale-installer script:
    ```sh
    apscale_installer
 
-8. Linux and MacOS (intel) users can use conda:
+8. **Linux and MacOS (intel)** users can use conda:
    ```sh
    conda install vsearch
    conda install blast
@@ -50,6 +50,14 @@ This tutorial will install the following tools:
    ```sh
    vsearch --help
    blastn -h
+
+* If you want to update the metabarcoding environment type:
+  ```sh
+  conda env update --file metabarcoding_env_XXX.yml --prune
+
+* If you want to uninstall the metabarcoding environment type:
+  ```sh
+  conda remove -n metabarcoding --all
 
 ### Video tutorial
 
