@@ -50,3 +50,8 @@ This tutorial will install the following tools:
    ```sh
    vsearch --help
    blastn -h
+
+### Video tutorial
+
+[![YouTube](http://i.ytimg.com/vi/c6pm0FhcINI/hqdefault.jpg)](https://www.youtube.com/watch?v=c6pm0FhcINI)
+
