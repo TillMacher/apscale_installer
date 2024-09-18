@@ -2,7 +2,7 @@
 
 ## Installation Tutorial for the Apscale Metabarcoding Workflow
 
-### Introduction
+## Introduction
 
 The easiest way to install the apscale metabarcoding workflow is by using [Miniconda3](https://docs.anaconda.com/miniconda/#). Miniconda will create an isolated environment with all the suggested versions of each tool.
 
@@ -15,7 +15,7 @@ This tutorial will install the following tools:
 * [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
 * TaxonTableTool2 (coming soon)
 
-### Miniconda Installation
+## Miniconda Installation
 
 1. Install Miniconda by following the instructions.
 
@@ -59,7 +59,17 @@ This tutorial will install the following tools:
   ```sh
   conda remove -n metabarcoding --all
 
-### Video tutorial
+## Usage
 
-[![YouTube](http://i.ytimg.com/vi/c6pm0FhcINI/hqdefault.jpg)](https://www.youtube.com/watch?v=c6pm0FhcINI)
+Now that everything is installed, you can use the installed software. 
+
+Refer to the homepages of each program to run learn how to use them:
+* [Apscale](https://github.com/DominikBuchner/apscale)
+* [Apscale_blast](https://github.com/TillMacher/apscale_blast)
+* [Boldigger2](https://github.com/DominikBuchner/BOLDigger2)
+* [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
+* TaxonTableTool2 (coming soon)
+
+## Video tutorial
+There is also a [YouTube tutorial](https://www.youtube.com/watch?v=c6pm0FhcINI) available.
 
