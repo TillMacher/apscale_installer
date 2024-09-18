@@ -37,11 +37,11 @@ This tutorial will install the following tools:
    ```sh
    conda activate metabarcoding
 
-7. For Windows and MacOS users run the apscale-installer script:
+7. Windows and MacOS users run the apscale-installer script:
    ```sh
    apscale_installer
 
-8. For Linux and MacOS (intel) users can use conda:
+8. Linux and MacOS (intel) users can use conda:
    ```sh
    conda install vsearch
    conda install blast
