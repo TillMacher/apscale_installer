@@ -41,7 +41,12 @@ This tutorial will install the following tools:
    ```sh
    apscale_installer
 
-9. Verify your installations:
+9. For Linux and MacOS (intel) users can use conda:
+   ```sh
+   conda install vsearch
+   conda install blast
+
+10. Verify your installations:
    ```sh
    vsearch --help
    blastn -h
