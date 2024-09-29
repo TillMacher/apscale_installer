@@ -2,7 +2,7 @@
 
 ## Installation Tutorial for the Apscale Metabarcoding Workflow
 
-### Introduction
+## Introduction
 
 The easiest way to install the apscale metabarcoding workflow is by using [Miniconda3](https://docs.anaconda.com/miniconda/#). Miniconda will create an isolated environment with all the suggested versions of each tool.
 
@@ -15,7 +15,7 @@ This tutorial will install the following tools:
 * [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
 * TaxonTableTool2 (coming soon)
 
-### Miniconda Installation
+## Miniconda Installation
 
 1. Install Miniconda by following the instructions.
 
@@ -25,23 +25,51 @@ This tutorial will install the following tools:
 
 3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_windows_x64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_macos_aarch64.yml).
 
-5. Install the metabarcoding environment by typing:
+4. Install the metabarcoding environment by typing:
    ```sh
-   conda env create -f environment_XXX.yml
+   conda env create -f metabarcoding_env_XXX.yml
    
-6. Ensure you provide the correct path, for example:
+5. Ensure you provide the correct path, for example:
    ```sh
    conda env create -f /Users/tillmacher/Downloads/metabarcoding_env_macos_aarch64.yml
    
-7. This should automatically install all dependencies. After the installation, activate the environment:
+6. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
    conda activate metabarcoding
 
-8. For Windows and MacOS users run the apscale-installer script:
+7. **Windows and MacOS** users run the apscale-installer script:
    ```sh
    apscale_installer
+
+8. **Linux and MacOS (intel)** users can use conda:
+   ```sh
+   conda install vsearch
+   conda install blast
 
 9. Verify your installations:
    ```sh
    vsearch --help
    blastn -h
+
+* If you want to update the metabarcoding environment type:
+  ```sh
+  conda env update --file metabarcoding_env_XXX.yml --prune
+
+* If you want to uninstall the metabarcoding environment type:
+  ```sh
+  conda remove -n metabarcoding --all
+
+## Usage
+
+Now that everything is installed, you can use the installed software. 
+
+Refer to the homepages of each program to run learn how to use them:
+* [Apscale](https://github.com/DominikBuchner/apscale/tree/main?tab=readme-ov-file#how-to-use)
+* [Apscale_blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
+* [Boldigger2](https://github.com/DominikBuchner/BOLDigger2?tab=readme-ov-file#installation-and-usage)
+* [Demultiplexer](https://github.com/DominikBuchner/demultiplexer?tab=readme-ov-file#how-to-use)
+* TaxonTableTool2 (coming soon)
+
+## Video tutorial
+There is also a [YouTube tutorial](https://www.youtube.com/watch?v=c6pm0FhcINI) available, where the installation of **Windows** and **MacOS** is demonstrated.
+
