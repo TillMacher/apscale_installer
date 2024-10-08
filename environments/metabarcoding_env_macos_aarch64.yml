@@ -78,7 +78,7 @@ dependencies:
       - numpy==1.26.4
       - openpyxl==3.1.5
       - packaging==24.1
-      - pandas==2.2.2
+      - pandas==2.2.3
       - parse==1.20.2
       - platformdirs==4.3.3
       - pooch==1.8.2
