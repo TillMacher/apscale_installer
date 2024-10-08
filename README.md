@@ -10,6 +10,7 @@ The easiest way to install the apscale metabarcoding workflow is by using [Minic
 
 This tutorial will install the following tools:
 * [Apscale](https://github.com/DominikBuchner/apscale)
+* [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast)
 * [Boldigger2](https://github.com/DominikBuchner/BOLDigger2)
 * [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
