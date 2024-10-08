@@ -66,6 +66,7 @@ Now that everything is installed, you can use the installed software.
 
 Refer to the homepages of each program to run learn how to use them:
 * [Apscale](https://github.com/DominikBuchner/apscale/tree/main?tab=readme-ov-file#how-to-use)
+* [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
 * [Boldigger2](https://github.com/DominikBuchner/BOLDigger2?tab=readme-ov-file#installation-and-usage)
 * [Demultiplexer](https://github.com/DominikBuchner/demultiplexer?tab=readme-ov-file#how-to-use)
