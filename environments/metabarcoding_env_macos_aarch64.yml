@@ -41,7 +41,7 @@ dependencies:
       - appdirs==1.4.4
       - apscale==2.0.3
       - apscale_renamer==0.1
-      - apscale-blast==1.0.2
+      - apscale-blast==1.0.3
       - apscale_gui==2.0.0
       - apscale-installer==0.3
       - beautifulsoup4==4.12.3
