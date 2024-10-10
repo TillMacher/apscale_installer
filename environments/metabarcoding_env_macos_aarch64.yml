@@ -42,14 +42,14 @@ dependencies:
       - apscale==2.0.3
       - apscale_renamer==0.1
       - apscale-blast==1.0.3
-      - apscale_gui==2.0.0
+      - apscale_gui==2.0.1
       - apscale-installer==0.3
       - beautifulsoup4==4.12.3
       - bio==1.7.1
       - biopython==1.84
       - biothings-client==0.3.1
       - blosc2==2.7.1
-      - boldigger2==2.2.0
+      - boldigger2==2.2.1
       - bs4==0.0.2
       - certifi==2024.8.30
       - charset-normalizer==3.3.2
