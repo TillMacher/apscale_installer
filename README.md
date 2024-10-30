@@ -30,11 +30,11 @@ This tutorial will install the following tools:
 
 4. Install the metabarcoding environment by typing:
    ```sh
-   conda env create -f metabarcoding_env_windows_x64.yml
+   conda env create -f apscale_env_windows_aarch64.yml
    
 5. Ensure you provide the correct path, for example:
    ```sh
-   conda env create -f /Users/tillmacher/Downloads/metabarcoding_env_macos_aarch64.yml
+   conda env create -f /Users/tillmacher/Downloads/apscale_env_windows_aarch64.yml
    
 6. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
@@ -48,6 +48,7 @@ This tutorial will install the following tools:
    ```sh
    conda install vsearch
    conda install blast
+   playwright install
 
 9. Verify your installations:
    ```sh
@@ -56,7 +57,7 @@ This tutorial will install the following tools:
 
 * If you want to update the metabarcoding environment type:
   ```sh
-  conda env update --file metabarcoding_env_windows_x64.yml --prune
+  conda env update --file apscale_env_windows_aarch64.yml --prune
 
 * If you want to uninstall the metabarcoding environment type:
   ```sh
