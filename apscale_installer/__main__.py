@@ -139,6 +139,11 @@ def download_vsearch(url, file_name):
     os.environ["PATH"] += os.pathsep + str(env_path)
     print("Finished installation!")
 
+def download_playwright():
+    print("Starting to install playwright!")
+    result = subprocess.run('playwright install', shell=True, stdout=subprocess.PIPE)
+    print("Finished installation!")
+
 def main():
     ## OS-specific download
     current_os = platform.system()
@@ -168,6 +173,9 @@ def main():
         url = 'https://github.com/torognes/vsearch/releases/download/v2.28.1/vsearch-2.28.1-macos-aarch64.tar.gz'
         file_name = url.split('/')[-1]
         download_vsearch(url, file_name)
+
+    ## boldigger3 playwright
+    download_playwright()
 
 if __name__ == "__main__":
     main()
