@@ -26,7 +26,7 @@ This tutorial will install the following tools:
    - **Windows**: Type 'Anaconda' in your search bar and select 'Anaconda Powershell Prompt (miniconda3)'.
    - **MacOS**: Open a new terminal. You will see the (base) environment before your user name.
 
-3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_windows_x64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_macos_aarch64.yml).
+3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env_windows_aarch64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env_macos_aarch64.yml).
 
 4. Install the metabarcoding environment by typing:
    ```sh
