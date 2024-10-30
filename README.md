@@ -4,8 +4,6 @@
 * BOLDigger3 is now implement in Apscale-GUI [30.10.2024]
 * The environment is now called "apscale" instead of "metabarcoding" [30.10.2024]
 
-## Installation Tutorial for the Apscale Metabarcoding Workflow
-
 ## Introduction
 
 The easiest way to install the apscale metabarcoding workflow is by using [Miniconda3](https://docs.anaconda.com/miniconda/#). Miniconda will create an isolated environment with all the suggested versions of each tool.
