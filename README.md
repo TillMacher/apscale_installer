@@ -1,6 +1,8 @@
 # Apscale Installer
 
-## Installation Tutorial for the Apscale Metabarcoding Workflow
+## Important changes
+* BOLDigger3 is now implement in Apscale-GUI [30.10.2024]
+* The environment is now called "apscale" instead of "metabarcoding" [30.10.2024]
 
 ## Introduction
 
@@ -12,7 +14,7 @@ This tutorial will install the following tools:
 * [Apscale](https://github.com/DominikBuchner/apscale)
 * [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast)
-* [Boldigger2](https://github.com/DominikBuchner/BOLDigger2)
+* [Boldigger3](https://github.com/DominikBuchner/BOLDigger3)
 * [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
 * TaxonTableTool2 (coming soon)
 
@@ -24,19 +26,19 @@ This tutorial will install the following tools:
    - **Windows**: Type 'Anaconda' in your search bar and select 'Anaconda Powershell Prompt (miniconda3)'.
    - **MacOS**: Open a new terminal. You will see the (base) environment before your user name.
 
-3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_windows_x64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/metabarcoding_env_macos_aarch64.yml).
+3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env_windows_aarch64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env_macos_aarch64.yml).
 
 4. Install the metabarcoding environment by typing:
    ```sh
-   conda env create -f metabarcoding_env_XXX.yml
+   conda env create -f apscale_env_windows_aarch64.yml
    
 5. Ensure you provide the correct path, for example:
    ```sh
-   conda env create -f /Users/tillmacher/Downloads/metabarcoding_env_macos_aarch64.yml
+   conda env create -f /Users/tillmacher/Downloads/apscale_env_windows_aarch64.yml
    
 6. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
-   conda activate metabarcoding
+   conda activate apscale
 
 7. **Windows and MacOS** users run the apscale-installer script:
    ```sh
@@ -46,6 +48,7 @@ This tutorial will install the following tools:
    ```sh
    conda install vsearch
    conda install blast
+   playwright install
 
 9. Verify your installations:
    ```sh
@@ -54,11 +57,11 @@ This tutorial will install the following tools:
 
 * If you want to update the metabarcoding environment type:
   ```sh
-  conda env update --file metabarcoding_env_XXX.yml --prune
+  conda env update --file apscale_env_windows_aarch64.yml --prune
 
 * If you want to uninstall the metabarcoding environment type:
   ```sh
-  conda remove -n metabarcoding --all
+  conda remove -n apscale --all
 
 ## Usage
 
@@ -68,7 +71,7 @@ Refer to the homepages of each program to run learn how to use them:
 * [Apscale](https://github.com/DominikBuchner/apscale/tree/main?tab=readme-ov-file#how-to-use)
 * [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
-* [Boldigger2](https://github.com/DominikBuchner/BOLDigger2?tab=readme-ov-file#installation-and-usage)
+* [Boldigger3](https://github.com/DominikBuchner/BOLDigger3?tab=readme-ov-file#installation-and-usage)
 * [Demultiplexer](https://github.com/DominikBuchner/demultiplexer?tab=readme-ov-file#how-to-use)
 * TaxonTableTool2 (coming soon)
 
