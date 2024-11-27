@@ -40,7 +40,7 @@ dependencies:
   - pip:
       - appdirs==1.4.4
       - apscale==2.0.3
-      - apscale-blast==1.0.3
+      - apscale-blast==1.0.4
       - apscale-gui==2.0.3
       - apscale-installer==0.4
       - apscale-renamer==0.1
@@ -49,14 +49,14 @@ dependencies:
       - biopython==1.84
       - biothings-client==0.3.1
       - blosc2==2.7.1
-      - boldigger3==1.1.8
+      - boldigger3==1.2.5
       - bs4==0.0.2
       - certifi==2024.8.30
       - charset-normalizer==3.3.2
       - cramjam==2.8.3
       - cssselect==1.2.0
       - cutadapt==4.9
-      - demultiplexer==1.2.1
+      - demultiplexer2==1.0.3
       - dnaio==1.2.1
       - et-xmlfile==1.1.0
       - fake-useragent==1.5.1
