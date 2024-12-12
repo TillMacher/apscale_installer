@@ -40,7 +40,7 @@ dependencies:
   - pip:
       - appdirs==1.4.4
       - apscale==2.1.0
-      - apscale-blast==1.0.5
+      - apscale-blast==1.0.6
       - apscale-gui==2.0.3
       - apscale-installer==0.4
       - apscale-renamer==0.1
