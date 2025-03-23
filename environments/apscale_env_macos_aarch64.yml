@@ -39,9 +39,9 @@ dependencies:
   - xz=5.2.6
   - pip:
       - appdirs>=1.4.4
-      - apscale>=2.1.1
-      - apscale-blast>=1.2.0
-      - apscale-gui>=2.0.4
+      - apscale>=3.0.0
+      - apscale-blast>=1.2.3
+      - apscale-gui>=2.0.5
       - apscale-installer>=0.4
       - apscale-renamer>=0.1
       - beautifulsoup4>=4.12.3
