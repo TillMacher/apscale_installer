@@ -32,25 +32,21 @@ This tutorial will install the following tools:
    ```sh
    conda env create -f apscale_env_windows_aarch64.yml
    
-5. Ensure you provide the correct path, for example:
-   ```sh
-   conda env create -f /Users/tillmacher/Downloads/apscale_env_windows_aarch64.yml
-   
-6. This should automatically install all dependencies. After the installation, activate the environment:
+5. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
    conda activate apscale
 
-7. **Windows and MacOS** users run the apscale-installer script:
+6. **Windows and MacOS** users run the apscale-installer script:
    ```sh
    apscale_installer
 
-8. **Linux and MacOS (intel)** users can use conda:
+7. **Linux and MacOS (intel)** users can use conda:
    ```sh
    conda install bioconda::vsearch
    conda install bioconda::blast
    playwright install
 
-9. Verify your installations:
+8. Verify your installations:
    ```sh
    vsearch --help
    blastn -h
