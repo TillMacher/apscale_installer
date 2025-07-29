@@ -46,8 +46,8 @@ This tutorial will install the following tools:
 
 8. **Linux and MacOS (intel)** users can use conda:
    ```sh
-   conda install vsearch
-   conda install blast
+   conda install bioconda::vsearch
+   conda install bioconda::blast
    playwright install
 
 9. Verify your installations:
