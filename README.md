@@ -65,7 +65,7 @@ Refer to the homepages of each program to run learn how to use them:
 * [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
 * [Boldigger3](https://github.com/DominikBuchner/BOLDigger3?tab=readme-ov-file#installation-and-usage)
-* [Demultiplexer](https://github.com/DominikBuchner/demultiplexer?tab=readme-ov-file#how-to-use)
+* [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2)
 * TaxonTableTool2 (coming soon)
 
 ## Video tutorial
