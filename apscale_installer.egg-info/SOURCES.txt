@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+apscale_installer/__init__.py
+apscale_installer/__main__.py
+apscale_installer.egg-info/PKG-INFO
+apscale_installer.egg-info/SOURCES.txt
+apscale_installer.egg-info/dependency_links.txt
+apscale_installer.egg-info/entry_points.txt
+apscale_installer.egg-info/requires.txt
+apscale_installer.egg-info/top_level.txt
