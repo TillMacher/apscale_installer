@@ -1,8 +1,9 @@
 # Apscale Installer
 
 ## Important changes
-* BOLDigger3 is now implement in Apscale-GUI [30.10.2024]
-* The environment is now called "apscale" instead of "metabarcoding" [30.10.2024]
+* APSCALE4 is now implement in APSCALE-GUI [22.08.2025]
+* Please update the environment to "apscale4" (upgraded to python3.12)
+* The original "apscale" environment is outdated (python3.10 is no longer supported).
 
 ## Introduction
 
@@ -34,7 +35,7 @@ This tutorial will install the following tools:
    
 5. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
-   conda activate apscale
+   conda activate apscale4
 
 6. **Windows and MacOS** users run the apscale-installer script:
    ```sh
@@ -51,11 +52,7 @@ This tutorial will install the following tools:
    vsearch --help
    blastn -h
 
-* If you want to update the metabarcoding environment type:
-  ```sh
-  conda env update --file apscale_env_windows_aarch64.yml --prune
-
-* If you want to uninstall the metabarcoding environment type:
+* If you want to uninstall the old apscale environment type:
   ```sh
   conda remove -n apscale --all
 
