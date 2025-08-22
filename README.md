@@ -1,8 +1,9 @@
 # Apscale Installer
 
 ## Important changes
-* BOLDigger3 is now implement in Apscale-GUI [30.10.2024]
-* The environment is now called "apscale" instead of "metabarcoding" [30.10.2024]
+* APSCALE4 is now implement in APSCALE-GUI [22.08.2025]
+* Please update the environment to "apscale4" (upgraded to python3.12)
+* The original "apscale" environment is outdated (python3.10 is no longer supported).
 
 ## Introduction
 
@@ -15,7 +16,7 @@ This tutorial will install the following tools:
 * [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast)
 * [Boldigger3](https://github.com/DominikBuchner/BOLDigger3)
-* [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
+* [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2)
 * TaxonTableTool2 (coming soon)
 
 ## Miniconda Installation
@@ -32,34 +33,26 @@ This tutorial will install the following tools:
    ```sh
    conda env create -f apscale_env_windows_aarch64.yml
    
-5. Ensure you provide the correct path, for example:
+5. This should automatically install all dependencies. After the installation, activate the environment:
    ```sh
-   conda env create -f /Users/tillmacher/Downloads/apscale_env_windows_aarch64.yml
-   
-6. This should automatically install all dependencies. After the installation, activate the environment:
-   ```sh
-   conda activate apscale
+   conda activate apscale4
 
-7. **Windows and MacOS** users run the apscale-installer script:
+6. **Windows and MacOS** users run the apscale-installer script:
    ```sh
    apscale_installer
 
-8. **Linux and MacOS (intel)** users can use conda:
+7. **Linux and MacOS (intel)** users can use conda:
    ```sh
-   conda install vsearch
-   conda install blast
+   conda install bioconda::vsearch
+   conda install bioconda::blast
    playwright install
 
-9. Verify your installations:
+8. Verify your installations:
    ```sh
    vsearch --help
    blastn -h
 
-* If you want to update the metabarcoding environment type:
-  ```sh
-  conda env update --file apscale_env_windows_aarch64.yml --prune
-
-* If you want to uninstall the metabarcoding environment type:
+* If you want to uninstall the old apscale environment type:
   ```sh
   conda remove -n apscale --all
 
