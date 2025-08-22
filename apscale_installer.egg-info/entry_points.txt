@@ -1,2 +1,0 @@
-[console_scripts]
-apscale_installer = apscale_installer.__main__:main
