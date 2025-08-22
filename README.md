@@ -16,7 +16,7 @@ This tutorial will install the following tools:
 * [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast)
 * [Boldigger3](https://github.com/DominikBuchner/BOLDigger3)
-* [Demultiplexer](https://github.com/DominikBuchner/demultiplexer)
+* [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2)
 * TaxonTableTool2 (coming soon)
 
 ## Miniconda Installation
