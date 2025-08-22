@@ -56,6 +56,21 @@ This tutorial will install the following tools:
   ```sh
   conda remove -n apscale --all
 
+## Miniconda Installation (manual)
+
+* If the yml installation of the environment fails a manual installation can be performed:
+
+   ```sh
+   conda create -n apscale4 python=3.12 ipython
+   conda activate apscale4
+   pip install apscale
+   pip install apscale_gui
+   pip install apscale_installer
+   pip install apscale_blast
+   pip install boldigger3
+   pip install demultiplexer2
+   apscale_installer
+
 ## Usage
 
 Now that everything is installed, you can use the installed software. 
@@ -65,7 +80,7 @@ Refer to the homepages of each program to run learn how to use them:
 * [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
 * [Apscale_blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
 * [Boldigger3](https://github.com/DominikBuchner/BOLDigger3?tab=readme-ov-file#installation-and-usage)
-* [Demultiplexer](https://github.com/DominikBuchner/demultiplexer?tab=readme-ov-file#how-to-use)
+* [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2)
 * TaxonTableTool2 (coming soon)
 
 ## Video tutorial
