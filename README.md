@@ -22,8 +22,13 @@ A second installer sets up [TaxonTableTools2](https://github.com/TillMacher/Taxo
 
 ### Step 1 – Install Miniconda (once)
 
-<<<<<<< HEAD
-Download and install Miniconda for your system: https://www.anaconda.com/download/success
+Download and install Miniconda for your system:
+
+* **Windows:** [Miniconda3-latest-Windows-x86_64.exe](https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe)
+* **macOS (Apple Silicon, M1–M4):** [Miniconda3-latest-MacOSX-arm64.pkg](https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.pkg)
+* **macOS (Intel):** [Miniconda3-latest-MacOSX-x86_64.pkg](https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.pkg)
+* All other versions: [Miniconda download page](https://www.anaconda.com/download/success?reg=skipped)
+
 Use the default settings. If you already have Miniconda or Anaconda, skip this step.
 
 ### Step 2 – Download the installers
@@ -91,6 +96,11 @@ Simply **run the installer again**. It detects the existing environment and upda
 | `blastn` does not start on a Mac with Apple Silicon (M1/M2/M3/M4) | blast+ is only available for Intel Macs and needs Rosetta. Install it once in Terminal: `softwareupdate --install-rosetta --agree-to-license` |
 | vsearch, swarm or blast+ is missing | Activate the environment and run `apscale_installer` again. |
 | Check if the tools work | `conda activate apscale4`, then `vsearch --version`, `swarm --version`, `blastn -version` |
+| `apscale_gui` stops with `TypeError: UpdateChecker.check() takes 1 positional argument but 3 were given` | Your APSCALE-GUI is outdated. Run the installer again to update everything (or `pip install --upgrade apscale_gui apscale_nanopore` in the activated environment). |
+| `ModuleNotFoundError: No module named '...'` (e.g. `stqdm`) | Run the installer again. Quick fix: `pip install <module name>` in the activated environment. |
+| `RequestsDependencyWarning: urllib3 ... or chardet ... doesn't match a supported version` | Only a warning. To remove it: `pip install --upgrade requests urllib3 charset-normalizer "chardet<6"` in the activated environment. |
+| APSCALE-GUI opens in Edge / another browser than expected | APSCALE-GUI always opens in your **default** browser. Change the default browser in your system settings, or copy the address shown in the terminal (e.g. `http://localhost:8501`) into the browser you want. |
+| I don't want the Playwright browsers | They are only needed by BOLDigger3. Remove them with `playwright uninstall --all` in the activated environment (BOLDigger3 will then not work). |
 
 ---
 
@@ -112,15 +122,15 @@ Only needed if the automatic installer does not work for you, or if you use **Li
 <summary>Option A – from the environment file</summary>
 
 1. Download [apscale_env.yml](https://github.com/TillMacher/apscale_installer/raw/main/environments/apscale_env.yml).
-2. Open the Anaconda Prompt (Windows) or Terminal (macOS/Linux) in the download folder and run:
-=======
-3. Download the environment installation file for [Mac&Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env.yml).
->>>>>>> 5a82efa3a90da503b44dc054a6448ddaf2f83d42
+2. Open the Anaconda Prompt (Windows) or Terminal (macOS/Linux), go to the folder where you saved the file, and create the environment:
 
    ```sh
+   cd Downloads
    conda env create -f apscale_env.yml
    conda activate apscale4
    ```
+
+   Alternatively, give the full path to the file, e.g. `conda env create -f "C:\Users\<you>\Downloads\apscale_env.yml"` (Windows) or `conda env create -f ~/Downloads/apscale_env.yml` (macOS/Linux).
 
 3. Install vsearch, swarm, blast+ and the BOLDigger3 browser:
    * **Windows / macOS:**

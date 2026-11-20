@@ -42,7 +42,9 @@ for d in "$HOME/miniconda3" "$HOME/anaconda3" "$HOME/miniforge3" "$HOME/opt/mini
         ROOT="$d"
     fi
 done
-[ -n "$ROOT" ] || fail "Miniconda was not found. Please install Miniconda first: https://www.anaconda.com/download/success"
+[ -n "$ROOT" ] || fail "Miniconda was not found. Please install Miniconda first:
+    Apple Silicon (M1-M4): https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.pkg
+    Intel:                 https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.pkg"
 
 echo "[+] Found conda in: $ROOT"
 

@@ -28,7 +28,8 @@ for %%D in ("%USERPROFILE%\miniconda3" "%USERPROFILE%\anaconda3" "%USERPROFILE%\
 )
 if not defined ROOT (
     echo [x] Miniconda was not found.
-    echo     Please install Miniconda first: https://www.anaconda.com/download/success
+    echo     Please install Miniconda first:
+    echo     https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe
     goto :fail
 )
 echo [+] Found conda in: %ROOT%
