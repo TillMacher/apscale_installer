@@ -1,88 +1,174 @@
-# Apscale Installer
+# APSCALE Installer
 
-## Important changes
-* APSCALE4 is now implement in APSCALE-GUI [22.08.2025]
-* Please update the environment to "apscale4" (upgraded to python3.12)
-* The original "apscale" environment is outdated (python3.10 is no longer supported).
+Install the complete APSCALE DNA metabarcoding toolbox with a **double-click**, on Windows and macOS.
 
-## Introduction
+The installer creates a conda environment called `apscale4` (Python 3.12) with:
 
-The easiest way to install the apscale metabarcoding workflow is by using [Miniconda3](https://docs.anaconda.com/miniconda/#). Miniconda will create an isolated environment with all the suggested versions of each tool.
+* [APSCALE](https://github.com/DominikBuchner/apscale) – raw-data processing
+* [APSCALE-GUI](https://github.com/TillMacher/apscale_gui) – graphical interface for APSCALE
+* [APSCALE-blast](https://github.com/TillMacher/apscale_blast) – taxonomic assignment
+* [APSCALE-Nanopore](https://github.com/TillMacher/apscale_nanopore) – Nanopore metabarcoding
+* [BOLDigger3](https://github.com/DominikBuchner/BOLDigger3) – BOLD identification engine
+* [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2) – demultiplexing
+* the command-line tools **vsearch**, **swarm** and **blast+**
 
-> **Note:** Currently, [vsearch](https://github.com/torognes/vsearch) and [blast+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) cannot be automatically installed via conda. For now, the easiest solution is the installation through the apscale-installer script. We will update this Wiki when vsearch and blast+ are available via conda. Linux users can install vsearch and blast+ already now using conda.
+A second installer sets up [TaxonTableTools2](https://github.com/TillMacher/TaxonTableTools2) in its own environment called `TTT`.
 
-This tutorial will install the following tools:
-* [Apscale](https://github.com/DominikBuchner/apscale)
-* [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
-* [Apscale_blast](https://github.com/TillMacher/apscale_blast)
-* [Boldigger3](https://github.com/DominikBuchner/BOLDigger3)
-* [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2)
-* TaxonTableTool2 (coming soon)
+> **News (22.08.2025):** APSCALE4 is now part of APSCALE-GUI. The old `apscale` environment (Python 3.10) is outdated – please switch to `apscale4`. See [Removing the old environment](#removing-the-old-environment).
 
-## Miniconda Installation
+---
 
-1. Install Miniconda by following the instructions.
+## Quick start (recommended)
 
-2. Open a new Anaconda (Miniconda3) terminal.
-   - **Windows**: Type 'Anaconda' in your search bar and select 'Anaconda Powershell Prompt (miniconda3)'.
-   - **MacOS**: Open a new terminal. You will see the (base) environment before your user name.
+### Step 1 – Install Miniconda (once)
 
-3. Download the respective environment installation file for [Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env_windows_aarch64.yml) or [MacOS](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env_macos_aarch64.yml).
+Download and install Miniconda for your system: https://www.anaconda.com/download/success
+Use the default settings. If you already have Miniconda or Anaconda, skip this step.
 
-4. Install the metabarcoding environment by typing:
+### Step 2 – Download the installers
+
+Download **[env_installers.zip](https://github.com/TillMacher/apscale_installer/raw/main/env_installers.zip)** and unzip it.
+It contains:
+
+| System  | APSCALE                        | TaxonTableTools2           |
+|---------|--------------------------------|----------------------------|
+| Windows | `W11/Install_apscale4.bat`     | `W11/Install_TTT.bat`      |
+| macOS   | `Mac/Install_apscale4.command` | `Mac/Install_TTT.command`  |
+
+> Please download the **zip file**. A single `.command` file downloaded through the browser loses its permission to run on macOS.
+
+### Step 3 – Run the installer
+
+**Windows:** double-click `Install_apscale4.bat`.
+If Windows shows *"Windows protected your PC"*, click **More info → Run anyway**.
+
+**macOS:** double-click `Install_apscale4.command`.
+If macOS says the file *"cannot be opened"*, **right-click → Open → Open**.
+(Alternative: open Terminal and type `bash ` followed by dragging the file into the window, then press Enter.)
+
+The installer will
+
+1. find your Miniconda installation,
+2. ask you to confirm (type `y`),
+3. download the latest environment file and create the `apscale4` environment,
+4. install vsearch, swarm, blast+ and the browser needed by BOLDigger3,
+5. check that everything works.
+
+This takes about **5–15 minutes** and needs about **3 GB** of disk space and an internet connection.
+
+### Step 4 – Start APSCALE
+
+Open a new terminal
+(**Windows:** search for *"Anaconda Powershell Prompt (miniconda3)"*; **macOS:** open *Terminal*) and type:
+
+```sh
+conda activate apscale4
+apscale_gui
+```
+
+For TaxonTableTools2:
+
+```sh
+conda activate TTT
+taxontabletools2
+```
+
+---
+
+## Updating
+
+Simply **run the installer again**. It detects the existing environment and updates all packages to the latest version.
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| *"Miniconda was not found"* | Install Miniconda (Step 1). If it is installed in an unusual folder, start the installer from the Anaconda Prompt / a terminal where `conda` works. |
+| The installation stopped with an error | Check your internet connection and run the installer again. It continues where it stopped. |
+| `blastn` does not start on a Mac with Apple Silicon (M1/M2/M3/M4) | blast+ is only available for Intel Macs and needs Rosetta. Install it once in Terminal: `softwareupdate --install-rosetta --agree-to-license` |
+| vsearch, swarm or blast+ is missing | Activate the environment and run `apscale_installer` again. |
+| Check if the tools work | `conda activate apscale4`, then `vsearch --version`, `swarm --version`, `blastn -version` |
+
+---
+
+## Removing the old environment
+
+The old `apscale` environment (Python 3.10) is no longer supported. To delete it:
+
+```sh
+conda remove -n apscale --all
+```
+
+---
+
+## Manual installation (advanced)
+
+Only needed if the automatic installer does not work for you, or if you use **Linux**.
+
+<details>
+<summary>Option A – from the environment file</summary>
+
+1. Download [apscale_env.yml](https://github.com/TillMacher/apscale_installer/raw/main/environments/apscale_env.yml).
+2. Open the Anaconda Prompt (Windows) or Terminal (macOS/Linux) in the download folder and run:
+
    ```sh
-   conda env create -f apscale_env_windows_aarch64.yml
-   
-5. This should automatically install all dependencies. After the installation, activate the environment:
-   ```sh
+   conda env create -f apscale_env.yml
    conda activate apscale4
+   ```
 
-6. **Windows and MacOS** users run the apscale-installer script:
-   ```sh
-   apscale_installer
+3. Install vsearch, swarm, blast+ and the BOLDigger3 browser:
+   * **Windows / macOS:**
+     ```sh
+     apscale_installer
+     ```
+   * **Linux:**
+     ```sh
+     conda install -c bioconda vsearch swarm blast
+     playwright install
+     ```
 
-7. **Linux and MacOS (intel)** users can use conda:
-   ```sh
-   conda install bioconda::vsearch
-   conda install bioconda::blast
-   playwright install
+</details>
 
-8. Verify your installations:
-   ```sh
-   vsearch --help
-   blastn -h
+<details>
+<summary>Option B – with pip</summary>
 
-* If you want to uninstall the old apscale environment type:
-  ```sh
-  conda remove -n apscale --all
+```sh
+conda create -n apscale4 python=3.12 ipython
+conda activate apscale4
+pip install apscale apscale_gui apscale_blast apscale_nanopore boldigger3 demultiplexer2 apscale_installer
+apscale_installer
+```
 
-## Miniconda Installation (manual)
+Linux users replace the last line with the Linux commands from Option A, step 3.
 
-* If the yml installation of the environment fails a manual installation can be performed:
+</details>
 
-   ```sh
-   conda create -n apscale4 python=3.12 ipython
-   conda activate apscale4
-   pip install apscale
-   pip install apscale_gui
-   pip install apscale_installer
-   pip install apscale_blast
-   pip install boldigger3
-   pip install demultiplexer2
-   apscale_installer
+<details>
+<summary>What does the <code>apscale_installer</code> command do?</summary>
+
+vsearch, swarm and blast+ are not available through conda on every system. `apscale_installer` downloads the official
+releases and copies them into the active conda environment, so they are available whenever the environment is active.
+It also installs the browser that BOLDigger3 needs (`playwright install`). Use `apscale_installer -y` to skip the confirmation question.
+
+</details>
+
+---
 
 ## Usage
 
-Now that everything is installed, you can use the installed software. 
+See the documentation of each program:
 
-Refer to the homepages of each program to run learn how to use them:
-* [Apscale](https://github.com/DominikBuchner/apscale/tree/main?tab=readme-ov-file#how-to-use)
-* [Apscale-GUI](https://github.com/TillMacher/apscale_gui)
-* [Apscale_blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
-* [Boldigger3](https://github.com/DominikBuchner/BOLDigger3?tab=readme-ov-file#installation-and-usage)
+* [APSCALE](https://github.com/DominikBuchner/apscale/tree/main?tab=readme-ov-file#how-to-use)
+* [APSCALE-GUI](https://github.com/TillMacher/apscale_gui)
+* [APSCALE-blast](https://github.com/TillMacher/apscale_blast?tab=readme-ov-file#how-to-use)
+* [APSCALE-Nanopore](https://github.com/TillMacher/apscale_nanopore)
+* [BOLDigger3](https://github.com/DominikBuchner/BOLDigger3?tab=readme-ov-file#installation-and-usage)
 * [Demultiplexer2](https://github.com/DominikBuchner/demultiplexer2)
-* TaxonTableTool2 (coming soon)
+* [TaxonTableTools2](https://github.com/TillMacher/TaxonTableTools2)
 
 ## Video tutorial
-There is also a [YouTube tutorial](https://www.youtube.com/watch?v=c6pm0FhcINI) available, where the installation of **Windows** and **MacOS** is demonstrated.
 
+A [YouTube tutorial](https://www.youtube.com/watch?v=c6pm0FhcINI) shows the installation on Windows and macOS
+(recorded with the older manual installation).

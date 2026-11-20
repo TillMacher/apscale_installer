@@ -1,273 +1,128 @@
-import glob
-import shutil
-import requests
 import os
-import tarfile
-import subprocess
-import json
 import platform
+import shutil
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
+import requests
+from tqdm import tqdm
 
-def download_blast(url, file_name):
-    ########################################################################################################################
-    ## Download
+TOOLS = {
+    "Windows": [
+        ("blast+", "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-win64.tar.gz"),
+        ("vsearch", "https://github.com/torognes/vsearch/releases/download/v2.30.0/vsearch-2.30.0-win-x86_64.zip"),
+        ("swarm", "https://github.com/torognes/swarm/releases/download/v3.1.5/swarm-3.1.5-win-x86_64.zip"),
+    ],
+    "Darwin": [
+        # blast+ is only available for Intel Macs (runs on Apple Silicon via Rosetta)
+        ("blast+", "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz"),
+        # "universal" builds run natively on Intel and Apple Silicon
+        ("vsearch", "https://github.com/torognes/vsearch/releases/download/v2.30.0/vsearch-2.30.0-macos-universal.tar.gz"),
+        ("swarm", "https://github.com/torognes/swarm/releases/download/v3.1.5/swarm-3.1.5-macos-universal.tar.gz"),
+    ],
+}
 
-    ## download the tar.gz file
-    response = requests.get(url)
-    with open(file_name, "wb") as file:
-        file.write(response.content)
 
-    print("Download complete!")
+def env_bin():
+    """Return the bin folder of the conda environment that runs this script."""
+    return Path(sys.prefix) / "bin"
 
-    ########################################################################################################################
-    ## Extract
 
-    extract_path = os.path.dirname(file_name)
+def download(url, file_name):
+    """Download a file with a tqdm progress bar."""
+    with requests.get(url, stream=True, timeout=60) as response:
+        response.raise_for_status()
+        total = int(response.headers.get("content-length", 0))
+        with open(file_name, "wb") as file, tqdm(
+                total=total, unit="B", unit_scale=True, unit_divisor=1024, desc="Downloading", leave=False
+        ) as bar:
+            for chunk in response.iter_content(chunk_size=256 * 1024):
+                bar.update(file.write(chunk))
 
-    # Extract the file based on its extension
-    if file_name.endswith('.tar.gz') or file_name.endswith('.tgz'):
-        shutil.unpack_archive(file_name, extract_path, 'gztar')
-        folder = file_name.replace('.tar.gz', '').replace('.tgz', '')
-    elif file_name.endswith('.tar.bz2') or file_name.endswith('.tbz'):
-        shutil.unpack_archive(file_name, extract_path, 'bztar')
-        folder = file_name.replace('.tar.bz2', '').replace('.bztar', '')
-    elif file_name.endswith('.tar.xz') or file_name.endswith('.txz'):
-        shutil.unpack_archive(file_name, extract_path, 'xztar')
-        folder = file_name.replace('.tar.xz', '').replace('.xztar', '')
-    elif file_name.endswith('.zip'):
-        shutil.unpack_archive(file_name, extract_path, 'zip')
-        folder = file_name.replace('.zip', '')
 
-    print("Unpacking complete!")
+def install(name, url, env_path):
+    file_name = url.split("/")[-1]
 
-    ########################################################################################################################
-    ## Find install directory
+    # Folder name inside the archive (blast+ unpacks to e.g. "ncbi-blast-2.16.0+")
+    if name == "blast+":
+        folder = file_name.split("+-")[0] + "+"
+    else:
+        folder = file_name
+        for ext in (".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".zip"):
+            folder = folder.removesuffix(ext)
 
-    # Run the conda info command
-    result = subprocess.run('conda info --json', shell=True, stdout=subprocess.PIPE)
-    # Parse the JSON output
-    conda_info = json.loads(result.stdout)
-    # Get the current environment path
-    env_path = Path(conda_info['default_prefix'] + '/bin')
-    print(f'Installing to: {env_path}')
+    # Work in a temporary folder, so nothing is left behind if something fails
+    with tempfile.TemporaryDirectory() as tmp:
+        archive = Path(tmp, file_name)
+        download(url, archive)
+        shutil.unpack_archive(archive, tmp)
 
-    ## create bin folder if necessary
-    os.makedirs(env_path, exist_ok=True)
+        bin_files = [f for f in Path(tmp, folder, "bin").glob("*") if f.is_file()]
+        if not bin_files:
+            raise RuntimeError(f"no program files found in {file_name}")
 
-    ########################################################################################################################
-    ## Move files to bin
+        for file in bin_files:
+            target = env_path / file.name
+            shutil.copy(file, target)
+            target.chmod(target.stat().st_mode | 0o755)  # make sure it is executable
 
-    # Collect files
-    folder = file_name.split('+-')[0] + '+'
-    bin_files = glob.glob(str(Path(f'./{extract_path}/{folder}/bin/*')))
+    print(f"  [ok] {name}: {len(bin_files)} files installed")
 
-    # Move files
-    for file in bin_files:
-        moved_file = env_path.joinpath(Path(file).name)
-        shutil.copy(file, moved_file)
-    print("Copied files!")
-
-    ########################################################################################################################
-    ## Delete temporary data
-    shutil.rmtree(folder)
-    os.unlink(file_name)
-
-    ########################################################################################################################
-    ## Update PATH
-
-    os.environ["PATH"] += os.pathsep + str(env_path)
-    print("Finished installation!")
-
-def download_vsearch(url, file_name):
-    ########################################################################################################################
-    ## Download
-
-    ## download the tar.gz file
-    response = requests.get(url)
-    with open(file_name, "wb") as file:
-        file.write(response.content)
-
-    print("Download complete!")
-
-    ########################################################################################################################
-    ## Extract
-
-    extract_path = os.path.dirname(file_name)
-
-    # Extract the file based on its extension
-    if file_name.endswith('.tar.gz') or file_name.endswith('.tgz'):
-        shutil.unpack_archive(file_name, extract_path, 'gztar')
-        folder = file_name.replace('.tar.gz', '').replace('.tgz', '')
-    elif file_name.endswith('.tar.bz2') or file_name.endswith('.tbz'):
-        shutil.unpack_archive(file_name, extract_path, 'bztar')
-        folder = file_name.replace('.tar.bz2', '').replace('.bztar', '')
-    elif file_name.endswith('.tar.xz') or file_name.endswith('.txz'):
-        shutil.unpack_archive(file_name, extract_path, 'xztar')
-        folder = file_name.replace('.tar.xz', '').replace('.xztar', '')
-    elif file_name.endswith('.zip'):
-        shutil.unpack_archive(file_name, extract_path, 'zip')
-        folder = file_name.replace('.zip', '')
-
-    print("Unpacking complete!")
-
-    ########################################################################################################################
-    ## Find install directory
-
-    # Run the conda info command
-    result = subprocess.run('conda info --json', shell=True, stdout=subprocess.PIPE)
-    # Parse the JSON output
-    conda_info = json.loads(result.stdout)
-    # Get the current environment path
-    env_path = Path(conda_info['default_prefix'] + '/bin')
-    print(f'Installing to: {env_path}')
-
-    ## create bin folder if necessary
-    os.makedirs(env_path, exist_ok=True)
-
-    ########################################################################################################################
-    ## Move files to bin
-
-    # Collect files
-    bin_files = glob.glob(str(Path(f'./{extract_path}/{folder}/bin/*')))
-
-    # Move files
-    for file in bin_files:
-        moved_file = env_path.joinpath(Path(file).name)
-        shutil.copy(file, moved_file)
-    print("Copied files!")
-
-    ########################################################################################################################
-    ## Delete temporary data
-    shutil.rmtree(folder)
-    os.unlink(file_name)
-
-    ########################################################################################################################
-    ## Update PATH
-
-    os.environ["PATH"] += os.pathsep + str(env_path)
-    print("Finished installation!")
-
-def download_swarm(url, file_name):
-    ########################################################################################################################
-    ## Download
-
-    ## download the tar.gz file
-    response = requests.get(url)
-    with open(file_name, "wb") as file:
-        file.write(response.content)
-
-    print("Download complete!")
-
-    ########################################################################################################################
-    ## Extract
-
-    extract_path = os.path.dirname(file_name)
-
-    # Extract the file based on its extension
-    if file_name.endswith('.tar.gz') or file_name.endswith('.tgz'):
-        shutil.unpack_archive(file_name, extract_path, 'gztar')
-        folder = file_name.replace('.tar.gz', '').replace('.tgz', '')
-    elif file_name.endswith('.tar.bz2') or file_name.endswith('.tbz'):
-        shutil.unpack_archive(file_name, extract_path, 'bztar')
-        folder = file_name.replace('.tar.bz2', '').replace('.bztar', '')
-    elif file_name.endswith('.tar.xz') or file_name.endswith('.txz'):
-        shutil.unpack_archive(file_name, extract_path, 'xztar')
-        folder = file_name.replace('.tar.xz', '').replace('.xztar', '')
-    elif file_name.endswith('.zip'):
-        shutil.unpack_archive(file_name, extract_path, 'zip')
-        folder = file_name.replace('.zip', '')
-
-    print("Unpacking complete!")
-
-    ########################################################################################################################
-    ## Find install directory
-
-    # Run the conda info command
-    result = subprocess.run('conda info --json', shell=True, stdout=subprocess.PIPE)
-    # Parse the JSON output
-    conda_info = json.loads(result.stdout)
-    # Get the current environment path
-    env_path = Path(conda_info['default_prefix'] + '/bin')
-    print(f'Installing to: {env_path}')
-
-    ## create bin folder if necessary
-    os.makedirs(env_path, exist_ok=True)
-
-    ########################################################################################################################
-    ## Move files to bin
-
-    # Collect files
-    bin_files = glob.glob(str(Path(f'./{extract_path}/{folder}/bin/*')))
-
-    # Move files
-    for file in bin_files:
-        moved_file = env_path.joinpath(Path(file).name)
-        shutil.copy(file, moved_file)
-    print("Copied files!")
-
-    ########################################################################################################################
-    ## Delete temporary data
-    shutil.rmtree(folder)
-    os.unlink(file_name)
-
-    ########################################################################################################################
-    ## Update PATH
-
-    os.environ["PATH"] += os.pathsep + str(env_path)
-    print("Finished installation!")
-
-def download_playwright():
-    print("Starting to install playwright!")
-    result = subprocess.run('playwright install', shell=True, stdout=subprocess.PIPE)
-    print("Finished installation!")
 
 def main():
-    ## OS-specific download
-    current_os = platform.system()
+    tools = TOOLS.get(platform.system())
 
-    if current_os == "Windows":
-        # blastn+
-        print('\nInstalling blast+:')
-        url = "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-win64.tar.gz"
-        file_name = url.split('/')[-1]
-        download_blast(url, file_name)
+    print('Welcome to the APSCALE installer!\n')
+    print('The following tools will be installed into your current conda environment:')
+    print('  - blast+\n  - vsearch\n  - swarm\n  - playwright (browser for BOLDigger3)\n')
 
-        ## vsearch
-        print('\nInstalling vsearch:')
-        url = 'https://github.com/torognes/vsearch/releases/download/v2.30.0/vsearch-2.30.0-win-x86_64.zip'
-        file_name = url.split('/')[-1]
-        download_vsearch(url, file_name)
+    # "-y" skips the question (used by the automatic installers)
+    if "-y" not in sys.argv:
+        while True:
+            response = input('Proceed ([y]/n)?: ').strip().lower()
+            if response in ('', 'y', 'n'):
+                break
+            print('Please type y or n.')
 
-        # swarm
-        print('\nInstalling swarm:')
-        url = 'https://github.com/torognes/swarm/releases/download/v3.1.5/swarm-3.1.5-win-x86_64.zip'
-        file_name = url.split('/')[-1]
-        download_swarm(url, file_name)
+        if response == 'n':
+            print('Installation cancelled.')
+            return
 
-    elif current_os == "Darwin":
-        # blastn+
-        print('\nInstalling blast+:')
-        url = "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz"
-        file_name = url.split('/')[-1]
-        download_blast(url, file_name)
+    failed = []
 
-        ## vsearch
-        print('\nInstalling vsearch:')
-        url = 'https://github.com/torognes/vsearch/releases/download/v2.30.0/vsearch-2.30.0-macos-x86_64.tar.gz'
-        file_name = url.split('/')[-1]
-        download_vsearch(url, file_name)
+    if tools:
+        env_path = env_bin()
+        env_path.mkdir(parents=True, exist_ok=True)
+        print(f"Installing to: {env_path}\n")
 
-        # swarm
-        print('\nInstalling swarm:')
-        url = 'https://github.com/torognes/swarm/releases/download/v3.1.5/swarm-3.1.5-macos-universal.tar.gz'
-        file_name = url.split('/')[-1]
-        download_swarm(url, file_name)
-
+        for name, url in tools:
+            print(name)
+            try:
+                install(name, url, env_path)
+            except Exception as error:
+                print(f"  [x] {name} could not be installed: {error}")
+                failed.append(name)
     else:
-        print('\nSeems like you are not using Windows or Mac. Please install blast+, vsearch, and swarm manually.')
+        print("Linux: please install blast+, vsearch and swarm with conda:")
+        print("  conda install -c bioconda blast vsearch swarm\n")
 
-    ## boldigger3 playwright
-    download_playwright()
+    # boldigger3 needs the playwright browsers
+    print("playwright")
+    result = subprocess.run([sys.executable, "-m", "playwright", "install"])
+    if result.returncode == 0:
+        print("  [ok] playwright: browsers installed")
+    else:
+        print("  [x] playwright: browsers could not be installed")
+        failed.append("playwright")
+
+    if failed:
+        print(f"\nFinished with problems. Not installed: {', '.join(failed)}")
+        print("Check your internet connection and run 'apscale_installer' again.")
+        sys.exit(1)
+
+    print("\nAll done!")
+
 
 if __name__ == "__main__":
     main()
