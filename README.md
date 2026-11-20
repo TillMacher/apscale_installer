@@ -22,6 +22,7 @@ A second installer sets up [TaxonTableTools2](https://github.com/TillMacher/Taxo
 
 ### Step 1 – Install Miniconda (once)
 
+<<<<<<< HEAD
 Download and install Miniconda for your system: https://www.anaconda.com/download/success
 Use the default settings. If you already have Miniconda or Anaconda, skip this step.
 
@@ -112,6 +113,9 @@ Only needed if the automatic installer does not work for you, or if you use **Li
 
 1. Download [apscale_env.yml](https://github.com/TillMacher/apscale_installer/raw/main/environments/apscale_env.yml).
 2. Open the Anaconda Prompt (Windows) or Terminal (macOS/Linux) in the download folder and run:
+=======
+3. Download the environment installation file for [Mac&Windows](https://github.com/TillMacher/apscale_installer/blob/main/environments/apscale_env.yml).
+>>>>>>> 5a82efa3a90da503b44dc054a6448ddaf2f83d42
 
    ```sh
    conda env create -f apscale_env.yml
